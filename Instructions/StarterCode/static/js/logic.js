@@ -16,15 +16,27 @@ getEarthquakes = d3.json(queryUrl).then((data) => {
       
     L.geoJSON(data.features, {
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
+            function getColor(d) {
+                return d > 90 ? '#FC4E2A' :
+                d > 69 ? '#FD8D3C' :
+                d > 49 ? '#FEB24C' :
+                d > 29 ? '#FED976' :
+                d > 9 ? '#FFEADA0' :
+                '#BD0026' ;
+            }
+            var magnitudeMarker = L.circleMarker(latlng, {
+                
                 // make dynamic make a functio that return object
               radius: feature.properties.mag * 5,
-              fillColor: "#ff7800",
-              color: "#000",
+              fillColor: getColor(feature.geometry.coordinates[2]),
+              //chloropeth mapping
+              color: getColor(feature.geometry.coordinates[2]),
               weight: 1,
               opacity: 1,
               fillOpacity: 0.8
           });
+          magnitudeMarker.bindPopup(JSON.stringify(feature.properties))
+          return magnitudeMarker
         }
     }).addTo(myMap);
 })
