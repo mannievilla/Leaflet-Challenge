@@ -35,7 +35,9 @@ getEarthquakes = d3.json(queryUrl).then((data) => {
               opacity: 1,
               fillOpacity: 0.8
           });
-          magnitudeMarker.bindPopup(JSON.stringify(feature.properties))
+        //   magnitudeMarker.bindPopup(<h>`Magnitude: ${feature.properties.mag}`</h>) ;  
+        //     return magnitudeMarker
+          magnitudeMarker.bindPopup("Magnitude: " + JSON.stringify(feature.properties.mag) <br> 'Location: ' + JSON.stringify(feature.properties.place))
           return magnitudeMarker
         }
     }).addTo(myMap);
